@@ -22,7 +22,10 @@ require.config({
             exports: 'pageable'
         },
         spin: {
-        deps: ['jquery']
+            deps: ['jquery']
+        },
+        nvd3:{
+            deps: ['d3']
         }
     },
     paths: {
@@ -31,7 +34,9 @@ require.config({
         underscore: '../bower_components/underscore/underscore',
         bootstrap: 'vendor/bootstrap',
         pageable: '../bower_components/backbone-pageable/lib/backbone-pageable',
-        spin: '../bower_components/spin.js/dist/spin'
+        spin: '../bower_components/spin.js/dist/spin',
+        d3: '../bower_components/d3/d3',
+        nvd3: '../bower_components/nvd3/nv.d3'
     }
 });
 

@@ -5,14 +5,100 @@ define([
     'underscore',
     'backbone',
     'templates',
-    'collections/graph'
-    ], function ($, _, Backbone, JST, GraphCollection) {
+    'collections/graph',
+    'views/chartBase'
+    ], function ($, _, Backbone, JST, GraphCollection, ChartBase) {
         'use strict';
 
-        var GraphView = Backbone.View.extend({
+        var BarChart = ChartBase.extend({
 
-            //$('#graph').slideUp( "slow"); $('body').animate({'padding-top':70}, 'slow')
-            //$('#graph').slideDown( "slow"); $('body').animate({'padding-top':170}, 'slow')
+            defaults: _.defaults({
+                barPadding: 0.1
+            }, ChartBase.prototype.defaults),
+
+            getXScale: function() {
+                var padding = this.options.barPadding;
+//                return d3.scale.ordinal()
+//                .rangeRoundBands([0, this.width], padding)
+//                .domain(this.collection.pluck(this.options.xAttr));
+
+
+                var collectionArr = this.collection.toArray();
+                var minDate = this.collection.toArray()[0].get('date');
+                var maxDate = this.collection.toArray()[collectionArr.length - 1].get('date');
+                return d3.time.scale()
+                .domain( [new Date(minDate), d3.time.day.offset( new Date(maxDate), 1) ])
+                .rangeRound([0, this.width - this.defaults.margin.left - this.defaults.margin.right]);
+            },
+
+            getYScale: function() {
+                return d3.scale.linear()
+                .rangeRound([this.height, 0])
+                .domain([0, d3.max(this.collection.pluck(this.options.yAttr))]);
+            },
+
+            renderAxes: function() {
+
+                var xAxis = d3.svg.axis()
+                .scale(this.scales.x)
+                .orient("bottom")
+                .tickFormat(
+                    function(d) {
+                        return d3.time.format('%b %d')(new Date(d));
+                    }
+                );
+
+                var yAxis = d3.svg.axis()
+                .scale(this.scales.y)
+                .orient("left")
+                /*.tickFormat(d3.format(".0%"))*/;
+
+                this.svg.append("g")
+                .attr("class", "x axis")
+                .attr("transform", "translate(0," + this.height + ")")
+                .call(xAxis);
+
+                this.svg.append("g")
+                .attr("class", "y axis")
+                .call(yAxis);
+            },
+
+            renderData: function() {
+                var chart = this,
+                x = this.scales.x,
+                y = this.scales.y;
+
+
+
+
+                this.svg.selectAll(".bar")
+                .data(this.collection.toArray())
+                .enter().append("rect")
+                .attr("class", "bar")
+                .attr("x",
+                    function(d) {
+                        console.log('x:'+d.get('date'));
+                        return x(d.get('date'));
+                    }
+                )
+//                .attr("width", x.rangeBand())
+                .attr("width", 20)
+                .attr("y",
+                    function(d) {
+                        //console.log('y:'+d.toJSON().value);
+                        return y(d.get('value'));
+                    }
+                )
+                .attr("height",
+                    function(d) {
+                        return chart.height - y(d.toJSON().value);
+                    }
+                );
+            }
+
+        });
+
+        var GraphView = Backbone.View.extend({
 
             tagName: 'div',
 
@@ -25,6 +111,7 @@ define([
             template: JST['app/scripts/templates/graph.ejs'],
 
             initialize: function () {
+
                 this.$graphCollection = new GraphCollection();
                 this.$isHidden = true;
 
@@ -37,6 +124,7 @@ define([
 
             render: function() {
                 this.$el.html(this.template());
+
                 return this;
             },
 
@@ -44,21 +132,33 @@ define([
                 var view = this;
                 this.$graphCollection.fetch({
                     data:params,
-                    success: function() {
-                        view.$graph.show();
-                    }
+                    reset:true,
                 });
             },
 
             addOne: function (graphItem) {
-                console.log('addOne:'+JSON.stringify(graphItem));
                 //append to graph data
             },
 
             addAll: function () {
-                console.log('addAll()');
                 //reset graph data
                 this.$graphCollection.each(this.addOne,this);
+
+                console.log('addAll()');
+                this.$graph.show();
+
+var graphCollection = this.$graphCollection;
+var chart = new BarChart({
+
+  el: ".graph-canvas",
+  collection: graphCollection,
+
+  xAttr: "date",
+  yAttr: "value"
+
+});
+chart.render();
+
             },
 
             toggleHide: function () {

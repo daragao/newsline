@@ -10,6 +10,10 @@ define([
         defaults: {
             'date':'',
             'value':0
+        },
+        parse:function (response) {
+            response.date = new Date(response.date);
+            return response;
         }
     });
 

@@ -24,6 +24,7 @@ define([
                 this.width = this.$el.width() - margin.left - margin.right;
                 this.height = this.$el.height() - margin.top - margin.bottom;
 
+
                 this.svg = d3.select(this.el).append("svg")
                 .attr("width", this.width + margin.left + margin.right)
                 .attr("height", this.height + margin.top + margin.bottom)

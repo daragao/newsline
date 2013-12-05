@@ -18,11 +18,6 @@ define([
 
             getXScale: function() {
                 var padding = this.options.barPadding;
-//                return d3.scale.ordinal()
-//                .rangeRoundBands([0, this.width], padding)
-//                .domain(this.collection.pluck(this.options.xAttr));
-
-
                 var collectionArr = this.collection.toArray();
                 var minDate = this.collection.toArray()[0].get('date');
                 var maxDate = this.collection.toArray()[collectionArr.length - 1].get('date');
@@ -48,28 +43,16 @@ define([
                     }
                 );
 
-                var yAxis = d3.svg.axis()
-                .scale(this.scales.y)
-                .orient("left")
-                /*.tickFormat(d3.format(".0%"))*/;
-
                 this.svg.append("g")
                 .attr("class", "x axis")
                 .attr("transform", "translate(0," + this.height + ")")
                 .call(xAxis);
-
-                this.svg.append("g")
-                .attr("class", "y axis")
-                .call(yAxis);
             },
 
             renderData: function() {
                 var chart = this,
                 x = this.scales.x,
                 y = this.scales.y;
-
-
-
 
                 this.svg.selectAll(".bar")
                 .data(this.collection.toArray())
@@ -85,7 +68,6 @@ define([
                 .attr("width", 20)
                 .attr("y",
                     function(d) {
-                        //console.log('y:'+d.toJSON().value);
                         return y(d.get('value'));
                     }
                 )

@@ -106,7 +106,6 @@ body {
     z-index: 1;
     top: -50px;
     position: fixed;
-    background-color: blue;
     width:100%;
 }
 
@@ -138,4 +137,31 @@ body {
     margin-bottom:0px;
     padding-top:5px;
     padding-bottom:5px;
+}
+
+/*
+* NVD3 Chart
+*/
+
+.chart div {
+  font: 10px sans-serif;
+  background-color: steelblue;
+  text-align: right;
+  padding: 3px;
+  margin: 1px;
+  color: white;
+}
+
+.bar {
+    fill: steelblue;
+}
+
+.axis text {
+  font: 10px sans-serif;
+}
+
+.axis path, .axis line {
+  fill: none;
+  stroke: #AAAAAA;
+  shape-rendering: crispEdges;
 }

@@ -12,9 +12,15 @@ define([
 
         var BarChart = ChartBase.extend({
 
+            chart: nv.models.lineChart(),
+
             defaults: _.defaults({
                 barPadding: 0.1
             }, ChartBase.prototype.defaults),
+
+            initialize: function() {
+                this.options = _.extend({}, this.defaults, this.options);
+            },
 
             getXScale: function() {
                 var padding = this.options.barPadding;
@@ -27,15 +33,17 @@ define([
             },
 
             getYScale: function() {
+                var maxValue = d3.max(this.collection.pluck('value'));
                 return d3.scale.linear()
-                .rangeRound([this.height, 0])
-                .domain([0, d3.max(this.collection.pluck(this.options.yAttr))]);
+                .rangeRound([0])
+                .domain([0,maxValue]);
             },
 
             renderAxes: function() {
 
-                var xAxis = d3.svg.axis()
-                .scale(this.scales.x)
+                var chart = this.chart;
+
+                chart.xAxis
                 .orient("bottom")
                 .tickFormat(
                     function(d) {
@@ -43,39 +51,55 @@ define([
                     }
                 );
 
-                this.svg.append("g")
-                .attr("class", "x axis")
-                .attr("transform", "translate(0," + this.height + ")")
-                .call(xAxis);
+                chart.yAxis
+                .tickFormat(function (d) {
+                    return d3.format()(d);
+                });
+            },
+
+            transformData: function() {
+                var arr = [];
+                var obj = this.collection;
+                obj.forEach(function(item){
+                    var newDate = item.get('date');
+                    arr.push({x: newDate, y: item.get('value')});
+                });
+                var data = [{
+                    "key": "news",
+                    "values": arr,
+                    color: '#2ca02c',
+                }];
+                return data;
             },
 
             renderData: function() {
-                var chart = this,
-                x = this.scales.x,
-                y = this.scales.y;
+                var thisChart = this.chart;
+                var x = this.scales.x;
+                var y = this.scales.y;
 
-                this.svg.selectAll(".bar")
-                .data(this.collection.toArray())
-                .enter().append("rect")
-                .attr("class", "bar")
-                .attr("x",
-                    function(d) {
-                        console.log('x:'+d.get('date'));
-                        return x(d.get('date'));
-                    }
-                )
-//                .attr("width", x.rangeBand())
-                .attr("width", 20)
-                .attr("y",
-                    function(d) {
-                        return y(d.get('value'));
-                    }
-                )
-                .attr("height",
-                    function(d) {
-                        return chart.height - y(d.toJSON().value);
-                    }
-                );
+                var data = this.transformData();
+                var duration= this.options.duration;
+                var width = this.options.width;
+                var height = this.options.height;
+                var margin = this.options.margin;
+
+                nv.addGraph(function () {
+                    thisChart
+                    .width(width).height(height)
+                    .margin(margin)
+                    .x(function (d) { return d.x })
+                    .y(function (d) { return d.y });
+
+
+                    d3.select('.graph-canvas svg')
+                    .datum(data)
+                    .transition().duration(duration)
+                    .call(thisChart);
+
+                    nv.utils.windowResize(thisChart.update);
+
+                    return thisChart;
+                });
             }
 
         });
@@ -87,7 +111,7 @@ define([
             className: 'graph-container',
 
             events: {
-            'click .graph-button': 'toggleHide'
+                'click .graph-button': 'toggleHide'
             },
 
             template: JST['app/scripts/templates/graph.ejs'],
@@ -102,6 +126,7 @@ define([
 
                 this.$graph = $('#graph');
                 this.$graph.append(this.render().el);
+
             },
 
             render: function() {
@@ -129,30 +154,40 @@ define([
                 console.log('addAll()');
                 this.$graph.show();
 
-var graphCollection = this.$graphCollection;
-var chart = new BarChart({
+                var graphCollection = this.$graphCollection;
+                var chart = new BarChart({
 
-  el: ".graph-canvas",
-  collection: graphCollection,
+                    el: ".graph-canvas",
+                    collection: graphCollection,
 
-  xAttr: "date",
-  yAttr: "value"
+                    xAttr: "date",
+                    yAttr: "value"
 
-});
-chart.render();
+                });
+                chart.render();
+
+                var elHeight = $('.graph-canvas').height();
+                var navHeight = $('.navbar').height();
+                var slidePx = elHeight-navHeight;
+                var bodyTopPadding = 90;
+                this.$graph.css({ top: -slidePx });
+                $('body').css({ 'padding-top': bodyTopPadding });
 
             },
 
             toggleHide: function () {
-                var element = $('#graph');
+                var elHeight = $('.graph-canvas').height();
+                var navHeight = $('.navbar').height();
+                var slidePx = elHeight-navHeight;
+                var bodyTopPadding = 90;
                 var speed = 'fast';
                 var callback = function (view) { view.$isHidden = !view.$isHidden;};
                 if(this.$isHidden) {
-                    element.animate({'top':50}, speed);
-                    $('body').animate({'padding-top':190}, speed,callback(this));
+                    this.$graph.animate({'top':navHeight}, speed);
+                    $('body').animate({'padding-top':elHeight+bodyTopPadding}, speed,callback(this));
                 } else {
-                    element.animate({'top':-50}, speed);
-                    $('body').animate({'padding-top':90}, speed,callback(this));
+                    this.$graph.animate({'top':-slidePx}, speed);
+                    $('body').animate({'padding-top':bodyTopPadding}, speed,callback(this));
                 }
             }
         });

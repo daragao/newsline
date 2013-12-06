@@ -104,7 +104,6 @@ body {
 #graph {
     display:none;
     z-index: 1;
-    top: -50px;
     position: fixed;
     width:100%;
 }
@@ -114,7 +113,8 @@ body {
 }
 
 .graph-canvas {
-    height:100px;
+    background: #FFFFFF;
+    height:400px;
 }
 
 .graph-button {
@@ -142,26 +142,17 @@ body {
 /*
 * NVD3 Chart
 */
-
-.chart div {
-  font: 10px sans-serif;
-  background-color: steelblue;
-  text-align: right;
-  padding: 3px;
-  margin: 1px;
-  color: white;
-}
-
-.bar {
-    fill: steelblue;
-}
-
-.axis text {
+.nv-axis text {
   font: 10px sans-serif;
 }
 
-.axis path, .axis line {
+.nv-axis path,
+.nv-axis line {
   fill: none;
-  stroke: #AAAAAA;
+  stroke: #CCCCCC;
   shape-rendering: crispEdges;
+}
+
+.nvd3 .nv-y .nv-axis path.domain {
+    stroke-opacity: 0.1;
 }

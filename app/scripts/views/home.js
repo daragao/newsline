@@ -77,7 +77,7 @@ define([
                 var searchParams = $(event.target).serialize();
                 this.$newsListCollection.reset();
                 this.fetchView(searchParams+'&page='+1);
-                this.$graphView.fetchView(searchParams);//graph view fetch collection
+                this.$graphView.fetchView(searchParams/*.replace('test','search')*/);//graph view fetch collection
                 this.$lastSearchParams = searchParams;
                 this.$lastSearchPage = 1;
             },

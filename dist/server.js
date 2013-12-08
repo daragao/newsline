@@ -2,4 +2,4 @@
 
 var statik = require('statik');
 var server = statik.createServer('dist/');
-server.listen(80);
+server.listen();

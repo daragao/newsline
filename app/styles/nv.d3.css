@@ -1,10 +1,7 @@
-# 1 "app/bower_components/nvd3/nv.d3.css"
-# 1 "<command-line>"
-# 1 "app/bower_components/nvd3/nv.d3.css"
 
-
-
-
+/********************
+ * HTML CSS
+ */
 
 
 .chartWrap {
@@ -13,9 +10,9 @@
   overflow: hidden;
 }
 
-
-
-
+/********************
+  Box shadow and border radius styling
+*/
 .nvtooltip.with-3d-shadow, .with-3d-shadow .nvtooltip {
   -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
   -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
@@ -26,9 +23,9 @@
   border-radius: 6px;
 }
 
-
-
-
+/********************
+ * TOOLTIP CSS
+ */
 
 .nvtooltip {
   position: absolute;
@@ -52,9 +49,9 @@
   user-select: none;
 }
 
-
-
-
+/*Give tooltips that old fade in transition by
+    putting a "with-transitions" class on the container div.
+*/
 .nvtooltip.with-transitions, .with-transitions .nvtooltip {
   transition: opacity 250ms linear;
   -moz-transition: opacity 250ms linear;
@@ -141,9 +138,9 @@
 }
 
 
-
-
-
+/********************
+ * SVG CSS
+ */
 
 
 svg {
@@ -153,7 +150,7 @@ svg {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-
+  /* Trying to get SVG to act like a greedy block in all browsers */
   display: block;
   width:100%;
   height:100%;
@@ -171,9 +168,9 @@ svg .title {
 .nvd3 .nv-background {
   fill: white;
   fill-opacity: 0;
-
-
-
+  /*
+  pointer-events: none;
+  */
 }
 
 .nvd3.nv-noData {
@@ -182,9 +179,9 @@ svg .title {
 }
 
 
-
-
-
+/**********
+*  Brush
+*/
 
 .nv-brush .extent {
   fill-opacity: .125;
@@ -193,9 +190,9 @@ svg .title {
 
 
 
-
-
-
+/**********
+*  Legend
+*/
 
 .nvd3 .nv-legend .nv-series {
   cursor: pointer;
@@ -207,9 +204,9 @@ svg .title {
 
 
 
-
-
-
+/**********
+*  Axes
+*/
 .nvd3 .nv-axis {
   pointer-events:none;
 }
@@ -236,7 +233,7 @@ svg .title {
 }
 
 .nvd3 .nv-axis .zero line,
-                                       .nvd3 .nv-axis line.zero {
+/*this selector may not be necessary*/ .nvd3 .nv-axis line.zero {
   stroke-opacity: .75;
 }
 
@@ -244,7 +241,7 @@ svg .title {
   font-weight: bold;
 }
 
-.nvd3 .x .nv-axis .nv-axisMaxMin text,
+.nvd3 .x  .nv-axis .nv-axisMaxMin text,
 .nvd3 .x2 .nv-axis .nv-axisMaxMin text,
 .nvd3 .x3 .nv-axis .nv-axisMaxMin text {
   text-anchor: middle
@@ -252,9 +249,9 @@ svg .title {
 
 
 
-
-
-
+/**********
+*  Brush
+*/
 
 .nv-brush .resize path {
   fill: #eee;
@@ -263,9 +260,9 @@ svg .title {
 
 
 
-
-
-
+/**********
+*  Bars
+*/
 
 .nvd3 .nv-bars .negative rect {
     zfill: brown;
@@ -297,9 +294,9 @@ svg .title {
 }
 
 
-
-
-
+/**********
+*  Bars
+*/
 
 .nvd3 .nv-multibar .nv-groups rect,
 .nvd3 .nv-multibarHorizontal .nv-groups rect,
@@ -324,9 +321,9 @@ svg .title {
   stroke: rgba(0,0,0,0);
 }
 
-
-
-
+/***********
+*  Pie Chart
+*/
 
 .nvd3.nv-pie path {
   stroke-opacity: 0;
@@ -358,14 +355,25 @@ svg .title {
   stroke-opacity: 0;
 }
 
-
-
-
+/**********
+* Lines
+*/
 
 .nvd3 .nv-groups path.nv-line {
   fill: none;
   stroke-width: 1.5px;
-# 377 "app/bower_components/nvd3/nv.d3.css"
+  /*
+  stroke-linecap: round;
+  shape-rendering: geometricPrecision;
+
+  transition: stroke-width 250ms linear;
+  -moz-transition: stroke-width 250ms linear;
+  -webkit-transition: stroke-width 250ms linear;
+
+  transition-delay: 250ms
+  -moz-transition-delay: 250ms;
+  -webkit-transition-delay: 250ms;
+  */
 }
 
 .nvd3 .nv-groups path.nv-line.nv-thin-line {
@@ -375,13 +383,32 @@ svg .title {
 
 .nvd3 .nv-groups path.nv-area {
   stroke: none;
-# 399 "app/bower_components/nvd3/nv.d3.css"
+  /*
+  stroke-linecap: round;
+  shape-rendering: geometricPrecision;
+
+  stroke-width: 2.5px;
+  transition: stroke-width 250ms linear;
+  -moz-transition: stroke-width 250ms linear;
+  -webkit-transition: stroke-width 250ms linear;
+
+  transition-delay: 250ms
+  -moz-transition-delay: 250ms;
+  -webkit-transition-delay: 250ms;
+  */
 }
 
 .nvd3 .nv-line.hover path {
   stroke-width: 6px;
 }
-# 412 "app/bower_components/nvd3/nv.d3.css"
+
+/*
+.nvd3.scatter .groups .point {
+  fill-opacity: 0.1;
+  stroke-opacity: 0.1;
+}
+  */
+
 .nvd3.nv-line .nvd3.nv-scatter .nv-groups .nv-point {
   fill-opacity: 0;
   stroke-opacity: 0;
@@ -422,14 +449,26 @@ svg .title {
 }
 
 
-
-
-
+/**********
+* Distribution
+*/
 
 .nvd3 .nv-distribution {
   pointer-events: none;
 }
-# 472 "app/bower_components/nvd3/nv.d3.css"
+
+
+
+/**********
+*  Scatter
+*/
+
+/* **Attempting to remove this for useVoronoi(false), need to see if it's required anywhere
+.nvd3 .nv-groups .nv-point {
+  pointer-events: none;
+}
+*/
+
 .nvd3 .nv-groups .nv-point.hover {
   stroke-width: 20px;
   stroke-opacity: .5;
@@ -438,39 +477,70 @@ svg .title {
 .nvd3 .nv-scatter .nv-point.hover {
   fill-opacity: 1;
 }
-# 492 "app/bower_components/nvd3/nv.d3.css"
+
+/*
+.nv-group.hover .nv-point {
+  fill-opacity: 1;
+}
+*/
+
+
+/**********
+*  Stacked Area
+*/
+
 .nvd3.nv-stackedarea path.nv-area {
   fill-opacity: .7;
-
-
-
-
+  /*
+  stroke-opacity: .65;
+  fill-opacity: 1;
+  */
   stroke-opacity: 0;
 
   transition: fill-opacity 250ms linear, stroke-opacity 250ms linear;
   -moz-transition: fill-opacity 250ms linear, stroke-opacity 250ms linear;
   -webkit-transition: fill-opacity 250ms linear, stroke-opacity 250ms linear;
 
-
-
-
-
-
+  /*
+  transition-delay: 500ms;
+  -moz-transition-delay: 500ms;
+  -webkit-transition-delay: 500ms;
+  */
 
 }
 
 .nvd3.nv-stackedarea path.nv-area.hover {
   fill-opacity: .9;
-
-
-
+  /*
+  stroke-opacity: .85;
+  */
 }
-# 526 "app/bower_components/nvd3/nv.d3.css"
+/*
+.d3stackedarea .groups path {
+  stroke-opacity: 0;
+}
+  */
+
+
+
 .nvd3.nv-stackedarea .nv-groups .nv-point {
   stroke-opacity: 0;
   fill-opacity: 0;
 }
-# 544 "app/bower_components/nvd3/nv.d3.css"
+
+/*
+.nvd3.nv-stackedarea .nv-groups .nv-point.hover {
+  stroke-width: 20px;
+  stroke-opacity: .75;
+  fill-opacity: 1;
+}*/
+
+
+
+/**********
+*  Line Plus Bar
+*/
+
 .nvd3.nv-linePlusBar .nv-bar rect {
   fill-opacity: .75;
 }
@@ -480,9 +550,9 @@ svg .title {
 }
 
 
-
-
-
+/**********
+*  Bullet
+*/
 
 .nvd3.nv-bullet { font: 10px sans-serif; }
 .nvd3.nv-bullet .nv-measure { fill-opacity: .8; }
@@ -507,9 +577,9 @@ svg .title {
 
 
 
-
-
-
+/**********
+* Sparkline
+*/
 
 .nvd3.nv-sparkline path {
   fill: none;
@@ -536,9 +606,9 @@ svg .title {
 
 .nvd3.nv-sparklineplus .nv-xValue,
 .nvd3.nv-sparklineplus .nv-yValue {
-
-
-
+  /*
+  stroke: #666;
+  */
   stroke-width: 0;
   font-size: .9em;
   font-weight: normal;
@@ -559,17 +629,17 @@ svg .title {
 }
 
 .nvd3.nv-sparklineplus .nv-currentValue {
-
-
-
-
+  /*
+  stroke: #444;
+  fill: #000;
+  */
   font-weight: bold;
   font-size: 1.1em;
 }
 
-
-
-
+/**********
+* historical stock
+*/
 
 .nvd3.nv-ohlcBar .nv-ticks .nv-tick {
   stroke-width: 2px;
@@ -598,9 +668,9 @@ svg .title {
 }
 
 .nvd3 .nv-brush .extent {
-
-
-
+  /*
+  cursor: ew-resize !important;
+  */
   fill-opacity: 0 !important;
 }
 
@@ -610,7 +680,17 @@ svg .title {
   fill: #fff;
   fill-opacity: .7;
 }
-# 694 "app/bower_components/nvd3/nv.d3.css"
+
+
+
+/**********
+* Indented Tree
+*/
+
+
+/**
+ * TODO: the following 3 selectors are based on classes used in the example.  I should either make them standard and leave them here, or move to a CSS file not included in the library
+ */
 .nvd3.nv-indentedtree .name {
   margin-left: 5px;
 }
@@ -633,21 +713,21 @@ svg .title {
 
 .nvd3.nv-indentedtree .nv-treeicon {
   cursor: pointer;
-
-
-
+  /*
+  cursor: n-resize;
+  */
 }
 
 .nvd3.nv-indentedtree .nv-treeicon.nv-folded {
   cursor: pointer;
-
-
-
+  /*
+  cursor: s-resize;
+  */
 }
 
-
-
-
+/**********
+* Parallel Coordinates
+*/
 
 .nvd3 .background path {
   fill: none;
@@ -678,9 +758,9 @@ svg .title {
   text-shadow: 0 1px 0 #fff;
 }
 
-
-
-
+/****
+Interactive Layer
+*/
 .nvd3 .nv-interactiveGuideLine {
   pointer-events:none;
 }

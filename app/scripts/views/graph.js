@@ -12,7 +12,7 @@ define([
 
         var BarChart = ChartBase.extend({
 
-            chart: nv.models.lineChart(),
+            chart: nv.models.lineWithFocusChart(),//lineChart(),
 
             defaults: _.defaults({
                 barPadding: 0.1

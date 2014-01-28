@@ -11,7 +11,9 @@ define([
 
             model: GraphModel,
 
-            url: 'http://newsline-php.ap01.aws.af.cm/chart.php?search=snowden&startdate=2013-08-01&enddate=2013-08-24',
+            url: 'http://newsline-php.ap01.aws.af.cm/newsline1/timeseries',
+//            url:
+//            'http://newsline-php.ap01.aws.af.cm/chart.php?search=snowden&startdate=2013-08-01&enddate=2013-08-24',
 
             initialize: function (options) {
             }

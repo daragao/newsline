@@ -13,6 +13,7 @@ define([
         },
         parse:function (response) {
             response.date = new Date(response.date);
+            response.value = Number(response.value);
             return response;
         }
     });

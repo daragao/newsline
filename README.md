@@ -32,7 +32,7 @@
 -->
 <h2>Specific Article</h2>
 
-<p> Get the specified article.</p>
+<p> Get the specified article using <i>HTTP GET.</i></p>
 
 
 <b>End-point:</b>
@@ -87,7 +87,7 @@
 
 
 <h2>Sources</h2>
-<p>Get a list of the possible sources.</p>
+<p>Get a list of the possible sources using <i>HTTP GET</i>.</p>
 
 <b>End-point:</b>
 <pre>

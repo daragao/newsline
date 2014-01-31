@@ -86,17 +86,22 @@ Note: paremeters <i>firstpeceofnews</i> and <i>begindate</i> cannot coexist in t
 <pre>
 <code>http://api.geteon.com/piecesofnews?search=obama</code>
 </pre>
-<p>Returns the time series about <i>obama</i> with a 30 days time window [&lt;today&gt; - 30 days ; &lt;today&gt;[</p>
+<p>Returns a list with the most recent 30 pieces of news about <i>obama</i>. Default values: begindate = &lt;today&gt,  pagenumber = 1, pagesize = 30.</p>
 
 <pre>
-<code>http://api.geteon.com/piecesofnews?search=obama&begindate=2013-11-02</code>
+<code>http://api.geteon.com/piecesofnews?search=obama&begindate=2013-11-02&pagenumber=25</code>
 </pre>
-<p>Returns the time series about <i>obama</i> with a 30 days time window [2013-10-31 ; 2013-11-02[</p>
+<p>Returns an ordered list with the previous 25 pieces of news about <i>obama</i> to 2013-11-02. Default values: pagenumber = 1.</p>
 
 <pre>
 <code>http://api.geteon.com/piecesofnews?search=obama&firstpeceofnews=52ead626e4b0d73224446faf</code>
 </pre>
-<p>Returns the time series about <i>obama</i> with the time window [2013-10-31 ; 2013-11-02[.</p>
+<p>Returns an ordered list with the previous 30 pieces of news about <i>obama</i> to the publish date of the piece of news with id=52ead626e4b0d73224446faf. Default values: pagenumber = 1, pagesize = 30.</p>
+
+<pre>
+<code>http://api.geteon.com/piecesofnews?search=obama&firstpeceofnews=52ead626e4b0d73224446faf&pagenumber=-2&pagesize=10</code>
+</pre>
+<p>Given an ordered list with the 20 pieces of news about <i>obama</i> ahead to the publish date of the piece of news with id=52ead626e4b0d73224446faf. It returns the last 10.</p>
 
 
 

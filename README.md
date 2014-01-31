@@ -1,32 +1,107 @@
 <h1>End-point list:</h1>
-
-<h2>List of Articles</h2>
-<!--<p> fkjsdfksdfksd fksdfdhks fashk fjsh fahjs fjasfaskh fsahf sjhf hjsf jasf</p>
-
-<pre>
-<code>http://api.geteon.com/timeseries?search=david%20miranda&startdate=2013-10-23&enddate=2013-11-25</code>
-</pre>
-
-<p>Parameters:</p>
 <ul>
-<li>search</li>
-<li>startdate</li>
-<li>enddate</li>
+<li><a href="#listarticles">List of Articles</a></li>
+<li><a href="#timeseries">Time Series</a></li>
+<li><a href="#specificarticle">Specific Article</a></li>
+<li><a href="#sources">Sources</a></li>
 </ul>
 
+<a name="listarticles"></a>
+<h2>List of Articles</h2>
+<p>Get a list of pieces of news about of a specific subject using <i>HTTP GET.</i></p>
+
+<pre>
+<code>http://api.geteon.com/piecesofnews</code>
+</pre>
+
+Parameters
+<ul>
+<li>search - <i>string</i> (mandatory) - subject of those pieces of news;</li>
+<li>begindate -  <i>date</i> (optional) default value = &lt;today&gt; - reference date point;</li>
+<li>pagesize -  <i>int</i> (optional) default value = 30, where int > 0. Number of pieces of news the answer will have;</li>
+<li>pagenumber -  <i>int</i> (optional)  default value = 1, where int != 0. Number of pages ahead the answer will be;</li>
+<li>firstpeceofnews -  <i>string</i> (optional) - id of a piece of news;</li>
+</ul>
+
+Note: paremeters <i>firstpeceofnews</i> and <i>begindate</i> cannot coexist in the same request.
+
+<b>Callback output:</b>
+<p>It returns the following JSON which contains an array and each element has the following fields: id, title of the piece of news, publish date, source id (RSS feed id), main source id, main source name (i.e. "The Guardian"), main source link, status of the piece of news according crawling process, link to the piece of news in the original source, and a number representing the .</p>
+
+<pre>
+<code class="language-javascript">
+[
+  {
+    "id":string
+    "title":string,
+    "pubdate":datetime,
+    "idsource":int,
+    "idmainsource":int,
+    "mainsourcename":string,
+    "mainsourcelink":"http:\/\/us.cnn.com\/?hpt=ed_US",
+    "status":"NER",
+    "link":"http:\/\/rss.cnn.com\/~r\/rss\/cnn_freevideo\/~3\/-WG5wFpDBAU\/",
+    "counter":0
+  }
+]
+</code>
+</pre>
+
+
 <b>Examples</b>
-<p>http://api.geteon.com/piecesofnews?search=david%20miranda</p>
-<p>http://api.geteon.com/piecesofnews?search=david%20miranda&enddate=2013-11-25</p>
-<p>http://api.geteon.com/piecesofnews?search=david%20miranda&startdate=2013-10-23&enddate=2013-11-25</p>
+<p>http://api.geteon.com/piecesofnews?search=obama&pagesize=2&pagenumber=1&begindate=2014-01-30</p>
 
--->
+<pre>
+<code class="language-javascript">
+[
+   {
+      "id":"52e9891fe4b00799c205c3ba",
+      "title":"Sochi: US Athletes' Concerns",
+      "pubdate":"2014-01-29 23:58:43",
+      "idsource":1104,
+      "idmainsource":"8",
+      "mainsourcename":"CNN - US",
+      "mainsourcelink":"http:\/\/us.cnn.com\/?hpt=ed_US",
+      "status":"NER",
+      "link":"http:\/\/rss.cnn.com\/~r\/rss\/cnn_freevideo\/~3\/-WG5wFpDBAU\/",
+      "counter":0
+   },
+   {
+      "id":"52e98911e4b00799c205c3b9",
+      "title":"CNN tags along on a Lunar New Year trek",
+      "pubdate":"2014-01-29 23:52:01",
+      "idsource":1104,
+      "idmainsource":"8",
+      "mainsourcename":"CNN - US",
+      "mainsourcelink":"http:\/\/us.cnn.com\/?hpt=ed_US",
+      "status":"NER",
+      "link":"http:\/\/rss.cnn.com\/~r\/rss\/cnn_freevideo\/~3\/uCJuW3r5nhw\/",
+      "counter":1
+   }
+]
+</code>
+</pre>
+
+<b>Possible Combinations</b>
+<pre>
+<code>http://api.geteon.com/piecesofnews?search=obama</code>
+</pre>
+<p>Returns the time series about <i>obama</i> with a 30 days time window [&lt;today&gt; - 30 days ; &lt;today&gt;[</p>
+
+<pre>
+<code>http://api.geteon.com/piecesofnews?search=obama&begindate=2013-11-02</code>
+</pre>
+<p>Returns the time series about <i>obama</i> with a 30 days time window [2013-10-31 ; 2013-11-02[</p>
+
+<pre>
+<code>http://api.geteon.com/piecesofnews?search=obama&firstpeceofnews=52ead626e4b0d73224446faf</code>
+</pre>
+<p>Returns the time series about <i>obama</i> with the time window [2013-10-31 ; 2013-11-02[.</p>
 
 
 
 
-
-
-
+<a name="timeseries"></a>
 <h2>Time Series</h2>
 
 <p> Get a time series of a specific subject using <i>HTTP GET.</i></p>
@@ -40,9 +115,9 @@
 
 Parameters
 <ul>
-<li>search - <i>string</i> - subject of the timeseries;</li>
-<li>startdate -  <i>date</i> - start date of the time windows you want to cover;</li>
-<li>enddate -  <i>date</i> - end date of the time windows you want to cover;</li>
+<li>search - <i>string</i> (mandatory) - subject of the timeseries;</li>
+<li>startdate -  <i>date</i> (optional) - start date of the time windows you want to cover;</li>
+<li>enddate -  <i>date</i> (optional) default value = &lt;today&gt;  - end date of the time windows you want to cover;</li>
 </ul>
 
 Note: the created time window with [&lt;startdate&gt; ; &lt;endate&gt;[ has maximum 30 days and the upper limit is not included.
@@ -53,7 +128,10 @@ Note: the created time window with [&lt;startdate&gt; ; &lt;endate&gt;[ has maxi
 <pre>
 <code class="language-javascript">
 [
-  {"date": date, "value": int}
+   {
+      "date":date,
+      "value":int
+   }
 ]
 </code>
 </pre>
@@ -65,9 +143,18 @@ Note: the created time window with [&lt;startdate&gt; ; &lt;endate&gt;[ has maxi
 <pre>
 <code class="language-javascript">
 [
-  {"date":"2013-Oct-31","value":"8"},
-  {"date":"2013-Nov-01","value":"3"},
-  {"date":"2013-Nov-02","value":"0"}
+   {
+      "date":"2013-Oct-31",
+      "value":"8"
+   },
+   {
+      "date":"2013-Nov-01",
+      "value":"3"
+   },
+   {
+      "date":"2013-Nov-02",
+      "value":"0"
+   }
 ]
 </code>
 </pre>
@@ -88,7 +175,7 @@ Note: the created time window with [&lt;startdate&gt; ; &lt;endate&gt;[ has maxi
 </pre>
 <p>Returns the time series about <i>obama</i> with the time window [2013-10-31 ; 2013-11-02[.</p>
 
-
+<a name="specificarticle"></a>
 <h2>Specific Article</h2>
 
 <p> Get the specified article using <i>HTTP GET.</i></p>
@@ -107,16 +194,16 @@ Note: the created time window with [&lt;startdate&gt; ; &lt;endate&gt;[ has maxi
 <pre>
 <code class="language-javascript">
 {
-  "id" : string,
-  "title" : string,
-  "pubdate" : datetime,
-  "idsource" : int,
-  "idmainsource" : int,
-  "mainsourcename" : string,
-  "mainsourcelink" : string,
-  "status" : string,
-  "link" : string,
-  "piecenews" : string
+  "id":string,
+  "title":string,
+  "pubdate":datetime,
+  "idsource":int,
+  "idmainsource":int,
+  "mainsourcename":string,
+  "mainsourcelink":string,
+  "status":string,
+  "link":string,
+  "piecenews":string
 }
 </code>
 </pre>
@@ -128,23 +215,23 @@ Note: the created time window with [&lt;startdate&gt; ; &lt;endate&gt;[ has maxi
 <pre>
 <code class="language-javascript">
 {
-  "id" : "51bf87bfe4b03445c885fece",
-  "title" : "GB success will continue - Clancy",
-  "pubdate" : "2012-04-17 15:35:09",
-  "idsource" : 1031,
-  "idmainsource" : "5",
-  "mainsourcename" : "BBC",
-  "mainsourcelink" : "http:\/\/www.bbc.co.uk\/",
-  "status" : "NER",
-  "link" : "http:\/\/www.bbc.co.uk\/go\/rss\/-\/sport\/0\/cycling\/17743885",
-  "piecenews" : "Ed Clancy expects GB success to continue if Dave Brailsford..."
+  "id":"51bf87bfe4b03445c885fece",
+  "title":"GB success will continue - Clancy",
+  "pubdate":"2012-04-17 15:35:09",
+  "idsource":1031,
+  "idmainsource":"5",
+  "mainsourcename":"BBC",
+  "mainsourcelink":"http:\/\/www.bbc.co.uk\/",
+  "status":"NER",
+  "link":"http:\/\/www.bbc.co.uk\/go\/rss\/-\/sport\/0\/cycling\/17743885",
+  "piecenews":"Ed Clancy expects GB success to continue if Dave Brailsford..."
 }
 </code>
 </pre>
 
 
 
-
+<a name="sources"></a>
 <h2>Sources</h2>
 <p>Get a list of the possible sources using <i>HTTP GET</i>.</p>
 
@@ -160,9 +247,9 @@ Note: the created time window with [&lt;startdate&gt; ; &lt;endate&gt;[ has maxi
 {
   [
     {
-      "id" : int,
-      "name" : string,
-      "link" : string
+      "id":int,
+      "name":string,
+      "link":string
     }
   ]
 }
